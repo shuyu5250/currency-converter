@@ -1,0 +1,111 @@
+openapi: 3.0.3
+info:
+  title: 幣別轉換API文件
+  description: 幣別轉換API文件
+  version: 1.0.0
+servers:
+  - url: 'http://localhost/api'
+tags:
+  - name: 匯率轉換
+paths:
+  '/currency-convert':
+    post:
+      tags:
+        - 匯率轉換
+      summary: 匯率轉換
+      description: 匯率轉換
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                source:
+                  type: string
+                  description: 來源幣別
+                  example: 'TWD'
+                  enum:
+                    - 'TWD'
+                    - 'JPY'
+                    - 'USD'
+                target:
+                  type: string
+                  description: 目標幣別
+                  example: 'USD'
+                  enum:
+                    - 'TWD'
+                    - 'JPY'
+                    - 'USD'
+                amount:
+                  type: number
+                  description: 數量
+                  example: 1000
+          'application/x-www-form-urlencoded':
+            schema:
+              type: object
+              properties:
+                source:
+                  type: string
+                  description: 來源幣別
+                  example: 'TWD'
+                  enum:
+                    - 'TWD'
+                    - 'JPY'
+                    - 'USD'
+                target:
+                  type: string
+                  description: 目標幣別
+                  example: 'USD'
+                  enum:
+                    - 'TWD'
+                    - 'JPY'
+                    - 'USD'
+                amount:
+                  type: number
+                  description: 數量
+                  example: 1000
+      responses:
+        '200':
+          description: 成功
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  dollars:
+                    type: string
+                    description: 轉換後的值
+                    example: 123.45
+        '422':
+          description: 輸入內容不符規格
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  message:
+                    description: 錯誤訊息描述
+                    type: string
+                    example: The selected source is invalid.
+                  errors:
+                    type: object
+                    properties:
+                      source:
+                        description: 來源幣別欄位驗證錯誤訊息
+                        type: array
+                        items:
+                          type: string
+                          example: The selected source is invalid
+                      target:
+                        description: 目標幣別欄位驗證錯誤訊息
+                        type: array
+                        items:
+                          type: string
+                          example: The selected source is invalid
+                      amount:
+                        description: 數量欄位驗證錯誤訊息
+                        type: array
+                        items:
+                          type: string
+                          example: The amount must be a number
+
